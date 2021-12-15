@@ -68,6 +68,7 @@ A mt's payload is such as
     }        
     "process": {
         "preparation": "some large text,
+        "materials": "some large text with comments on materials needed"
          "steps": {
             [
                 "type": "some large text",

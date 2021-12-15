@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "name": "Post",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "targetColumnName": "",
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "posts"
+    },
+    "values": {
+      "type": "json"
+    }
+  }
+}
