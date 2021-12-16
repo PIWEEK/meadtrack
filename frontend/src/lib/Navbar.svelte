@@ -9,7 +9,7 @@
 	<div class="flex items-center justify-between container mx-auto">
 		<section>
 		
-		<a href="/" class="font-bold font-serif no-underline"><img class="flex" src="/logo.png" alt="MeadTrack">MeadTrack</a>
+		<a href="/" class="font-bold font-serif no-underline"><img class="flex" src="/logo.png" alt="MeadTrack"></a>
 		
 	</section>
 		<section>

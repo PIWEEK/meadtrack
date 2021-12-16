@@ -20,7 +20,7 @@ const config = {
 		extend: {},
 	},
 	variants: {
-		extend: {},
+		extend: {backgroundColor: ['even','odd'],},
 	},
 	plugins: [],
 };
