@@ -198,7 +198,7 @@
 
   <div class="shadow-xl rounded-lg max-w-4xl">
 
-  <p class="text-left py-2 px-4 text-2xl mt-2">Main ingredients</p>
+  <p class="text-left py-2 px-4 text-2xl mt-2 font-serif">Main ingredients</p>
   <ul class="text-left pb-2 px-12 mt-2 list-disc">
 	  
 	  {#each post.values["recipe"]["main"] as main, idx}
@@ -210,7 +210,7 @@
 	  {/each}
   
 	</ul>
-	<p class="text-left py-2 px-4 text-2xl mt-2">Secondary ingredients</p>
+	<p class="text-left py-2 px-4 text-2xl mt-2  font-serif">Secondary ingredients</p>
 	<ul class="text-left pb-6 px-12 mt-2 list-disc ">
 	  
 	  {#each post.values["recipe"]["secondary"] as secondary, idx}

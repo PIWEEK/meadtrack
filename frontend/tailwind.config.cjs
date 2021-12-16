@@ -17,7 +17,7 @@ const config = {
 		safelist: [/^svelte-[\d\w]+$/],
 	},
 	theme: {
-		extend: {},
+		extend: {'serif': ['eb Garamond', 'serif',],'serif': ['open sans', 'sans-serif',],},
 	},
 	variants: {
 		extend: {backgroundColor: ['even','odd'],},
