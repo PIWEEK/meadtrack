@@ -11,7 +11,7 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.201",
 		"@types/cookie": "^0.4.0",
 		"@typescript-eslint/eslint-plugin": "^4.19.0",
 		"@typescript-eslint/parser": "^4.19.0",
@@ -34,8 +34,11 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.2.2",
+		"@fortawesome/free-solid-svg-icons": "^5.15.4",
 		"@lukeed/uuid": "^2.0.0",
 		"cookie": "^0.4.1",
-		"marked": "^2.1.1"
+		"marked": "^2.1.1",
+		"svelte-fa": "^2.4.0",
+		"svelte-frappe-charts": "^1.9.1"
 	}
 }

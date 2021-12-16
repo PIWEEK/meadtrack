@@ -29,8 +29,10 @@
 	};
 
 	let mt = {
-    title: 'title is not handled here',
+    title: "title is not handled here",
+	when: "",
     finished: false,
+	public: false,
 	notes: "",
     recipe: {
       main: [
@@ -39,6 +41,7 @@
         {type: "yeast", quantity: 4, units: "gr" }
       ],
       secondary: ['raisins', 'lavender', 'tea'],
+	  targetgravity: 0,
       conditions: "",
       result: "",
     },
@@ -76,8 +79,6 @@
 	export let editId: string;
 	export let title = '';
 	export let values = JSON.parse(JSON.stringify(mt));
-	export let yes = false;
-
 	onMount(() => {
 		if (!$user) goto('/login');
 	});
@@ -184,6 +185,10 @@
 		<label for="title">Title</label>
 		<input type="text" placeholder="Enter title" id="title" bind:value={title} />
 	</div>
+	<div class="my-1">
+		<label for="when">When</label>
+		<input type="text" placeholder="Freeform relevant project time info" id="when" bind:value={values.when} />
+	</div>
 
 	<div class="my-1">
 		<label for="title">Preparation</label>
@@ -197,6 +202,10 @@
 		<label for="title">Conditions</label>
 		<textarea type="text" placeholder="Enter notes on conditions" id="conditions" bind:value={values.recipe.conditions} />
 	</div>
+	<div class="my-1">
+		<label for="title">Target Gravity</label>
+		<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+	</div>
 
 	<div class="my-1">
 		<label for="title">Result</label>
@@ -208,32 +217,27 @@
 	</div>
 
 	<div>
-
-		
 		<label>
 	
 		  <span>Finished?</span>
 	
-		  <input
+		  <input type="checkbox" name="finished" bind:checked={values.finished}/>
+		</label>
 	
-		  type="checkbox"
-		  name="finished"
-		  bind:checked={yes}
+	  </div>
+	  <div>
+		<label>
 	
-		  />
-		  {#if yes}
-		  {values.finished = true}
-	  
-		  {:else}
-		  {values.finished = false}
-		 {/if}
+		  <span>Public Project?</span>
+	
+		  <input type="checkbox" name="public" bind:checked={values.public}/>
 		</label>
 	
 	  </div>
 	
 	  <div>
 
-		<h4>Main Ingredients</h4>
+		<label for="title">Main Ingredients</label>
 	
 		<ul>
 	
@@ -249,7 +253,7 @@
 	
 			/>
 			<input
-			type="number"
+			type="text"
 			name={`main[${idx}]`}
 			placeholder="0"
 			bind:value={main.quantity}
@@ -265,7 +269,7 @@
 	
 			<!-- remove text field and member -->
 	
-			<button on:click|preventDefault={() => removeMain(idx)}>x</button>
+			<button class="border-2 px-2 rounded-lg" on:click|preventDefault={() => removeMain(idx)}>x</button>
 	
 		  </li>
 	
@@ -356,10 +360,10 @@
 	
 		  <li class="flex">
 	
-			<textarea
-			type="text"
+			<input
+			type="number"
 			name={`measure[${idx}]`}
-			placeholder="a step"
+			placeholder="1000"
 			bind:value={measure.data}
 	
 			/>
@@ -387,6 +391,8 @@
 
 	<div class="my-2">
 		<button class="submit" type="submit">Submit</button>
+		<button class="cancel" type="cancel">Cancel</button>
+
 	</div>
 </form>
 
@@ -405,5 +411,8 @@
 
 	.submit {
 		@apply bg-blue-500 text-white border-transparent rounded px-4 py-2;
+	}
+	.add {
+		@apply bg-green-800 text-white;
 	}
 </style>
