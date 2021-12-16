@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
 	import user from '$lib/user';
+	import Fa from 'svelte-fa'
+	import { faPlus, faBeer} from '@fortawesome/free-solid-svg-icons'
 
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('/posts');
@@ -14,8 +16,7 @@
 	import type { Post } from '$lib/types';
 	import { goto } from '$app/navigation';
 	import { validate_each_argument } from 'svelte/internal';
-	import Fa from 'svelte-fa'
-	import { faPlus, faBeer} from '@fortawesome/free-solid-svg-icons'
+
 
 	export let posts: Post[];
 </script>
