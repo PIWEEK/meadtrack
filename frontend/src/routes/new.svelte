@@ -8,7 +8,7 @@
 		const edit = query.get('edit');
 
 		if (edit) {
-			const res = await fetch('http://localhost:1337/posts/' + edit);
+			const res = await fetch('http://192.168.10.32:1337/posts/' + edit);
 
 			if (res.status === 404) {
 				const error = new Error(`The post with ID ${edit} was not found`);
@@ -76,6 +76,8 @@
 	import { onMount } from 'svelte';
 	import user from '$lib/user';
 	import { goto } from '$app/navigation';
+	import Fa from 'svelte-fa'
+	import { faTrashAlt, faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 
 	export let editId: string;
 	export let title = '';
@@ -84,6 +86,44 @@
 		if (!$user) goto('/login');
 	});
 
+	export let basicVisible = true;
+	export let stepsVisible = false;
+	export let measuresVisible = false;
+	export let notesVisible = false;
+
+	function showBasic(){
+		basicVisible = true;
+		stepsVisible = false;
+		measuresVisible = false;
+		notesVisible = false;
+
+	};
+
+	function showSteps(){
+		basicVisible = false;
+		stepsVisible = true;
+		measuresVisible = false;
+		notesVisible = false;
+
+	};
+
+	function showMeasures(){
+		basicVisible = false;
+		stepsVisible = false;
+		measuresVisible = true;
+		notesVisible = false;
+
+	};
+
+	function showNotes(){
+		basicVisible = false;
+		stepsVisible = false;
+		measuresVisible = false;
+		notesVisible = true;
+
+	};
+
+
 	// To edit the post
 	async function editPost() {
 		if (!localStorage.getItem('token')) {
@@ -91,7 +131,7 @@
 			return;
 		}
 
-		const res = await fetch('http://localhost:1337/posts/' + editId, {
+		const res = await fetch('http://192.168.10.32:1337/posts/' + editId, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -125,7 +165,7 @@
 
 
 
-		const res = await fetch('http://localhost:1337/posts', {
+		const res = await fetch('http://192.168.10.32:1337/posts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -181,9 +221,18 @@
 
 </script>
 
-<form on:submit|preventDefault={createPost} class="my-4 mx-auto container p-4">
+<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-4xl border-gray-500 border-b">
+	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="basic" on:click={showBasic}>RECIPE</button>
+	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="steps" on:click={showSteps}>PROCESS</button>
+	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="measures" on:click={showMeasures}>MEASURES</button>
+	<button class="bg-gray-{notesVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="notes" on:click={showNotes}>NOTES</button>
+
+</div>
+
+
+<form on:submit|preventDefault={createPost} class="my-4 max-w-4xl container p-4">
 	
-	
+<div id="basic" class="{basicVisible ? '' : 'hidden'}">
 	<div class="my-1">
 		<label for="title">Title</label>
 		<input type="text" placeholder="Enter title" id="title" bind:value={title} />
@@ -198,235 +247,170 @@
 	</div>
 
 	<div>
-
 		<label for="title">Main Ingredients</label>
-	
-		<ul>
-	
-		  {#each values.recipe.main as main, idx}
-	
-		  <li class="flex">
-	
-			<input
-			type="text"
-			name={`main[${idx}]`}
-			placeholder="water"
-			bind:value={main.type}
-	
-			/>
-			<input
-			type="text"
-			name={`main[${idx}]`}
-			placeholder="0"
-			bind:value={main.quantity}
-	
-			/>
-			<input
-			type="text"
-			name={`main[${idx}]`}
-			placeholder="kg"
-			bind:value={main.units}
-	
-			/>
-	
-			<!-- remove text field and member -->
-	
-			<button class="border-2 px-2 rounded-lg" on:click|preventDefault={() => removeMain(idx)}>x</button>
-	
-		  </li>
-	
-		  {/each}
-	
-		</ul>
-	
-		<button class="add" on:click|preventDefault={addMain}> + add </button>
-	
-	  </div>
+			<ul>
+			  {#each values.recipe.main as main, idx}
+			  <li class="flex">
+				<button class="px-2" on:click|preventDefault={() => removeMain(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 
-	  <div>
-
-		<h4>Secondary Ingredients</h4>
+				<input type="text" name={`main[${idx}]`} placeholder="water" bind:value={main.type}/>
+				<input type="text" name={`main[${idx}]`} placeholder="0" bind:value={main.quantity}/>
+				<input type="text" name={`main[${idx}]`} placeholder="kg" bind:value={main.units}/>
 	
-		<ul>
-	
-		  {#each values.recipe.secondary as secondary, idx}
-	
-		  <li class="flex">
-	
-			<input
-			type="text"
-			name={`secondary[${idx}]`}
-			placeholder="New Secondary Ingredient"
-			bind:value={secondary}
-	
-			/>
-	
-			<!-- remove text field and member -->
-	
-			<button on:click|preventDefault={() => removeSecondary(idx)}>x</button>
-	
-		  </li>
-	
-		  {/each}
-	
-		</ul>
-	
-		<button class="add" on:click|preventDefault={addSecondary}> + add </button>
-	
-	  </div>
-
-
-
-	<div class="my-1">
-		<label for="title">Conditions</label>
-		<textarea type="text" placeholder="Enter notes on conditions" id="conditions" bind:value={values.recipe.conditions} />
+			  </li>
+			  {/each}
+			</ul>
 	</div>
-	<div class="my-1">
-		<label for="title">Result</label>
-		<textarea type="text" placeholder="Enter notes on expected result" id="preparation" bind:value={values.recipe.result} />
+	<div class="flex justify-end">
+		<button class="p-1" on:click|preventDefault={addMain}><Fa icon={faPlusSquare} size="2x"/></button>
 	</div>
 
 	<div>
+		<label for="title">Secondary Ingredients</label>
+			<ul>
+			  {#each values.recipe.secondary as secondary, idx}
+		  	<li class="flex">
+				<button class="px-2" on:click|preventDefault={() => removeSecondary(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
+
+				<input type="text" name={`secondary[${idx}]`} placeholder="New Secondary Ingredient" bind:value={secondary}/>
+	
+		  	</li>
+		  	{/each}
+			</ul>
+    </div>
+	<div class="flex justify-end">
+		<button class="p-1" on:click|preventDefault={addSecondary}><Fa icon={faPlusSquare} size="2x"/></button>
+	</div>
+
+	<div class="my-1">
+		<label for="title">Conditions</label>
+		<textarea rows="3" type="text" placeholder="Enter notes on conditions" id="conditions" bind:value={values.recipe.conditions} />
+	</div>
+	<div class="my-1">
+		<label for="title">Expected result</label>
+		<textarea rows="3" type="text" placeholder="Enter notes on expected result" id="result" bind:value={values.recipe.result} />
+	</div>
+
+	<div class="flex">
 		<label>
-	
-		  <span>Finished?</span>
-	
+		  <p>Is this mead project finished?</p>
 		  <input type="checkbox" name="finished" bind:checked={values.finished}/>
 		</label>
-	
-	  </div>
-	  <div>
+    </div>
+    <div class="flex">
 		<label>
-	
-		  <span>Public Project?</span>
-	
+		  <p>Do you want to make this mead project public?</p>
 		  <input type="checkbox" name="public" bind:checked={values.public}/>
 		</label>
-	
-	  </div>
-	
+     </div>
+</div>
 
-
-
+<div id="steps" class="{stepsVisible ? '' : 'hidden'}">
 
 	<div class="my-1">
 		<label for="title">Preparation</label>
-		<textarea type="text" placeholder="Enter notes on preparation" id="preparation" bind:value={values.process.preparation} />
+		<textarea rows="3" type="text" placeholder="Enter notes on preparation" id="preparation" bind:value={values.process.preparation} />
 	</div>
 	<div class="my-1">
 		<label for="title">Materials</label>
-		<textarea type="text" placeholder="Enter notes on materials" id="materials" bind:value={values.process.materials} />
-	</div>
-	
-	<div class="my-1">
-		<label for="title">Target Gravity</label>
-		<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+		<textarea rows="3" type="text" placeholder="Enter notes on materials" id="materials" bind:value={values.process.materials} />
 	</div>
 
-	<div class="my-1">
-		<label for="title">Notes</label>
-		<textarea type="text" placeholder="Enter notes on notes" id="preparation" bind:value={values.notes} />
-	</div>
-
-	  <div>
-
-		<h4>Steps</h4>
-	
+    <div>
+		<label for="title">Steps</label>
 		<ul>
-	
 		  {#each values.process.steps as step, idx}
-	
 		  <li class="flex">
-	
-			<textarea
-			type="text"
-			name={`step[${idx}]`}
-			placeholder="a step"
-			bind:value={step.type}
-	
-			/>
-			<input
-			type="date"
-			name={`step[${idx}]`}
-			placeholder=""
-			bind:value={step.date}
-	
-			/>
-			<!-- remove text field and member -->
-	
-			<button on:click|preventDefault={() => removeStep(idx)}>x</button>
+			<button class="px-2" on:click|preventDefault={() => removeStep(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
+
+			<textarea class="min-w-lg h-24" type="text" name={`step[${idx}]`}	placeholder="a step" bind:value={step.type}/>
+			<input class="max-w-fit" type="date" name={`step[${idx}]`} placeholder=""	bind:value={step.date}/>
 	
 		  </li>
-	
 		  {/each}
-	
 		</ul>
-	
-		<button class="add" on:click|preventDefault={addStep}> + add </button>
-	
+
 	  </div>
-	
-	  <div>
-
-		<h4>Measures</h4>
-	
-		<ul>
-	
-		  {#each values.process.measures as measure, idx}
-	
-		  <li class="flex">
-	
-			<input
-			type="number"
-			name={`measure[${idx}]`}
-			placeholder="1000"
-			bind:value={measure.data}
-	
-			/>
-			<input
-			type="date"
-			name={`measure[${idx}]`}
-			placeholder=""
-			bind:value={measure.date}
-	
-			/>
-			<!-- remove text field and member -->
-	
-			<button on:click|preventDefault={() => removeMeasure(idx)}>x</button>
-	
-		  </li>
-	
-		  {/each}
-	
-		</ul>
-	
-		<button class="add" on:click|preventDefault={addMeasure}> + add </button>
-	
-	  </div>
-
-
-	<div class="my-2">
-		<button class="submit" type="submit">Submit</button>
-		<button class="cancel" type="cancel">Cancel</button>
+	  <div class="flex justify-end">
+		<button class="p-1" on:click|preventDefault={addStep}><Fa icon={faPlusSquare} size="2x"/></button>
+    	</div>
 
 	</div>
+<div id="steps" class="{measuresVisible ? '' : 'hidden'}">
+	 
+		<div class="my-1">
+			<label for="title">Target Gravity</label>
+			<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+		</div>
+				
+		<ul>
+	
+			{#each values.process.measures as measure, idx}
+	  
+			<li class="flex">
+	  
+				<button class="px-2" on:click|preventDefault={() => removeMeasure(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
+	  
+			  <input
+			  type="number"
+			  name={`measure[${idx}]`}
+			  placeholder="1000"
+			  bind:value={measure.data}
+	  
+			  />
+			  <input
+			  type="date"
+			  name={`measure[${idx}]`}
+			  placeholder=""
+			  bind:value={measure.date}
+	  
+			  />
+			  <!-- remove text field and member -->
+	  
+			</li>
+	  
+			{/each}
+	  
+		  </ul>
+		  <div class="flex justify-end">
+			<button class="p-1" on:click|preventDefault={addMeasure}><Fa icon={faPlusSquare} size="2x"/></button>
+			</div>
+
+		  </div>
+
+			<div id="notes" class="{notesVisible ? '' : 'hidden'}">
+
+		<div class="my-1">
+			<label for="title">Notes</label>
+			<textarea rows="10" type="text" placeholder="Enter notes on notes" id="preparation" bind:value={values.notes} />
+		</div>
+
+</div>
+<div class="relative grid justify-items-end absolute bottom-0 ">
+	<div class="">
+		<button class="submit bg-black-700" type="submit">Submit</button>
+		<a href="/" class="p-2 underline" type="cancel">Cancel</a>
+	</div>
+
+</div>
+
 </form>
 
 <style lang="postcss">
 	label {
-		@apply font-bold block mb-1;
+		@apply font-bold block mt-5 mb-2;
 	}
 
 	input {
-		@apply bg-white w-full border border-gray-500 rounded outline-none py-2 px-4;
+		@apply bg-white w-full border border-gray-300 rounded outline-none py-2 px-4;
 	}
 
 	textarea {
-		@apply bg-white w-full border border-gray-500 rounded outline-none py-2 px-4 resize-y;
+		@apply bg-white w-full border border-gray-300 rounded outline-none py-2 px-4 resize-y;
 	}
 
 	.submit {
-		@apply bg-blue-500 text-white border-transparent rounded px-4 py-2;
+		@apply bg-green-600 text-white border-transparent rounded px-4 py-2;
 	}
 	.add {
 		@apply bg-green-800 text-white;

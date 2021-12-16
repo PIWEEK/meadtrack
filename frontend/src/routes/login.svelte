@@ -7,7 +7,7 @@
 	let password = '';
 
 	async function login() {
-		const res = await fetch('http://localhost:1337/auth/local', {
+		const res = await fetch('http://192.168.10.32:1337/auth/local', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify({ identifier: email, password })
@@ -28,8 +28,9 @@
 	}
 </script>
 
-<form on:submit|preventDefault={login} class="container mx-auto my-4">
-	<h1 class="text-center text-2xl font-bold">Login</h1>
+<div class="p-10 max-w-3xl">
+<form on:submit|preventDefault={login} class="container mx-auto">
+	<h1 class="text-center text-2xl pb-2 font-bold">Welcome to MeadTrack</h1>
 
 	<div class="my-1">
 		<label for="email">Email</label>
@@ -43,6 +44,7 @@
 		<button class="submit" type="submit">Login</button>
 	</div>
 </form>
+</div>
 
 <style lang="postcss">
 	label {
@@ -50,10 +52,10 @@
 	}
 
 	input {
-		@apply bg-white w-full border border-gray-500 rounded outline-none py-2 px-4;
+		@apply bg-white w-full border border-gray-400 rounded outline-none py-2 px-4;
 	}
 
 	.submit {
-		@apply bg-blue-500 text-white border-transparent rounded px-4 py-2;
+		@apply bg-gray-700 text-white border-transparent rounded px-4 py-2;
 	}
 </style>

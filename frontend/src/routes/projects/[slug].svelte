@@ -6,7 +6,7 @@
 		const { slug } = params;
 
 		// Now, we'll fetch the mead projects from Strapi
-		const res = await fetch('http://localhost:1337/posts/' + slug);
+		const res = await fetch('http://192.168.10.32:1337/posts/' + slug);
 
 		// A 404 status means "NOT FOUND"
 		if (res.status === 404) {
@@ -32,7 +32,7 @@
 	import Chart from 'svelte-frappe-charts';
 	import Fa from 'svelte-fa'
 	import { faPlus,  faCalendar, faCalendarAlt, faClock, faUser, faWineGlass, faCertificate} from '@fortawesome/free-solid-svg-icons'
-	import { faEye, faEyeSlash, faTrash, faEdit, faClone, faCheck } from '@fortawesome/free-solid-svg-icons'
+	import { faEye, faHourglassHalf, faEyeSlash, faTrash, faEdit, faClone, faCheck, faWineBottle } from '@fortawesome/free-solid-svg-icons'
 
 	export let post: Post;
 
@@ -112,7 +112,7 @@
 			return;
 		}
 
-		const res = await fetch('http://localhost:1337/posts/' + post.id, {
+		const res = await fetch('http://192.168.10.32:1337/posts/' + post.id, {
 			method: 'DELETE',
 			headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
 		});
@@ -136,7 +136,7 @@
 		summaryvalues["process"]["measures"] = [];
 		summaryvalues["public"] = false;
 
-		const res = await fetch('http://localhost:1337/posts', {
+		const res = await fetch('http://192.168.10.32:1337/posts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -159,7 +159,7 @@
 
 {#if post.values["public"] ||post.author.id === $user.id }
 
-<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-md border-gray-500 border-b">
+<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-4xl border-gray-500 border-b">
 	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="basic" on:click={showBasic}>RECIPE</button>
 	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="steps" on:click={showSteps}>PROCESS</button>
 	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="measures" on:click={showMeasures}>MEASURES</button>
@@ -168,15 +168,15 @@
 </div>
 
 <div class="flex">
-<h1 class="flex font-serif text-left py-0 px-4 text-3xl mt-4 max-w-md">{post.title}</h1>
+<h1 class="flex font-serif text-left py-0 px-4 text-3xl mt-4 max-w-4xl">{post.title}</h1>
 <p class="justify-end text-right py-2 px-1 mt-4">
 	{#if post.values["finished"]}
-	<Fa icon={faCheck} size="lg"/>
+	<Fa icon={faWineBottle} size="lg"/>
 	{:else}
-	<Fa icon={faCertificate} size="lg" spin />
+	<Fa icon={faHourglassHalf} size="lg" spin />
 	{/if}
 </p>
-<p class="justify-end text-right py-2 pr-4 mt-4">
+<p class="justify-end text-right py-2 px-1 pr-4 mt-4">
 	{#if post.values["public"]}
 	<Fa icon={faEye} size="lg"/>
 	{:else}
@@ -185,17 +185,18 @@
 </p>
 
 </div>
-<p class="pl-6 italic font-serif max-w-md">{post.values["description"]}</p>
-
+{#if post.values["description"]}
+<p class="pl-6 italic font-serif max-w-4xl">{post.values["description"]}</p>
+{/if}
 {#if post.values["when"]}
-<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-md"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
+<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
 {/if}
 
 
 <div id="basic" class="{basicVisible ? '' : 'hidden'}">
 
 
-  <div class="shadow-xl rounded-lg max-w-md">
+  <div class="shadow-xl rounded-lg max-w-4xl">
 
   <p class="text-left py-2 px-4 text-2xl mt-2">Main ingredients</p>
   <ul class="text-left pb-2 px-12 mt-2 list-disc">
@@ -222,7 +223,7 @@
   
 	</ul>
 	</div>
-	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="shadow-xl rounded-lg max-w-4xl">
 	<p class="w-fill font-semibold flex p-3 pl-3 text-gray-100 bg-gray-700 text-left py-2 px-4 mt-2 rounded-sm">Conditions</p>
 	{#if post.values["recipe"]["conditions"]}
 	<p class="text-left py-2 px-4 mt-2">{post.values["recipe"]["conditions"]}</p>
@@ -245,7 +246,7 @@
 
 <div id="steps" class="{stepsVisible ? '' : 'hidden'}">
 
-	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="shadow-xl rounded-lg max-w-4xl">
   <p class="w-fill font-semibold  flex p-3 pl-3 text-gray-100 bg-gray-700 text-left py-2 px-4 mt-2 rounded-sm">Preparation</p>
 
   {#if post.values["process"]["preparation"]}
@@ -268,7 +269,13 @@
 	
 	{#each post.values["process"]["steps"] as step, idx}
 
-	<li> <p class="bg-gray-300 p-1"> {step.date}</p>
+	<li> 
+		{#if step.date}
+		<p class="bg-gray-300 p-1"> {step.date}</p>
+		{:else}
+		<p class="bg-gray-300 p-1"> Next step</p>
+		{/if}
+		
 		<p class="p-1 pl-2">{step.type}</p>
 	</li>
 
@@ -287,13 +294,13 @@
 
 <div id="measures" class="{measuresVisible ? '' : 'hidden'}">
 	{#if post.values["process"]["measures"].length > 0}
-	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="shadow-xl rounded-lg max-w-4xl">
 	<Chart data={data} lineOptions={lineOptions} valuesOverPoints={valuesOverPoints} title={title} height={height} colors={colors} type="line" />
 	<div class="pb-8"></div>
 	</div>
 	{/if}
   
-	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="shadow-xl rounded-lg max-w-4xl">
 	<div class="flex border-b pt-1 pb-3">
   <div class="text-left font-bold py-2 px-4 mt-2">Target Gravity</div><div class="text-left font-bold py-2 px-4 mt-2 text-white font-bold bg-gray-700"> {post.values["recipe"]["targetgravity"]}</div>
 		</div>
@@ -308,7 +315,13 @@
 	  <tbody class="text-right py-2 px-4 mt-2 border-dotted border-2">
 		{#each post.values["process"]["measures"] as measure, idx}
 		<tr class="odd:bg-red even:bg-gray-100">
-		  <td class="p-2">{measure.date}</td>
+		  <td class="p-2">
+			{#if measure.date}
+			  {measure.date}
+			  {:else}
+			  No date given
+			  {/if}
+			</td>
 		  <td class="p-2">{measure.data}</td>
 		</tr>
 		{/each}
@@ -324,14 +337,14 @@
 
 
 <div id="notes" class="{notesVisible ? '' : 'hidden'}">
-	<div class="shadow-xl py-2 rounded-lg border-2 max-w-md">
+	<div class="shadow-xl py-2 rounded-lg border-2 max-w-4xl">
 		<p class="flex gap-2 text-left py-0 px-4 mt-2"><Fa icon={faUser} size="lg"/>{post.author.username}</p>
-		<p class="flex gap-2 text-left py-0 px-4 mt-2"><Fa icon={faCalendar} size="lg"/>{post.created_at.substring(0,10)}</p>
-		<p class="flex gap-2 text-left py-0 px-4 mt-2"><Fa icon={faClock} size="lg"/>{post.updated_at.substring(0,10)}</p>
+		<p class="flex gap-2 text-left py-0 px-4 mt-2 italic"><Fa icon={faCalendar} size="lg"/>Project created on {post.created_at.substring(0,10)}</p>
+		<p class="flex gap-2 text-left py-0 px-4 mt-2 italic"><Fa icon={faClock} size="lg"/>Project last updated on {post.updated_at.substring(0,10)}</p>
 		<div class="pb-3"></div>
 		</div>
 		
-	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="shadow-xl rounded-lg max-w-4xl">
 		{#if post.values["notes"]}
 		<p class="text-left py-2 px-4 mt-2">{post.values["notes"]}</p>
 		{:else}
@@ -344,7 +357,7 @@
 </div>
 
 
-<div class="my-2 flex justify-between py-2 px-4 max-w-md items-center gap-2">
+<div class="my-2 flex justify-between py-2 px-4 max-w-4xl items-center gap-2">
 	{#if $user && post.author.id === $user.id}
 	<button
 	class="bg-red-100 text-white font-bold py-1 px-2 rounded border-transparent"
