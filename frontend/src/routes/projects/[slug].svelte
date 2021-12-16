@@ -284,9 +284,17 @@
   <div class="pb-3"></div>
 </div>
 </div>
+
 <div id="measures" class="{measuresVisible ? '' : 'hidden'}">
+	{#if post.values["process"]["measures"].length > 0}
 	<div class="shadow-xl rounded-lg max-w-md">
-	<div class="flex border-b pb-3">
+	<Chart data={data} lineOptions={lineOptions} valuesOverPoints={valuesOverPoints} title={title} height={height} colors={colors} type="line" />
+	<div class="pb-8"></div>
+	</div>
+	{/if}
+  
+	<div class="shadow-xl rounded-lg max-w-md">
+	<div class="flex border-b pt-1 pb-3">
   <div class="text-left font-bold py-2 px-4 mt-2">Target Gravity</div><div class="text-left font-bold py-2 px-4 mt-2 text-white font-bold bg-gray-700"> {post.values["recipe"]["targetgravity"]}</div>
 		</div>
   <div class="px-8 pt-5">
@@ -311,11 +319,6 @@
 </div>
 </div>
   
-  {#if post.values["process"]["measures"].length > 0}
-  <div class="shadow-xl rounded-lg max-w-md">
-  <Chart data={data} lineOptions={lineOptions} valuesOverPoints={valuesOverPoints} title={title} height={height} colors={colors} type="line" />
-  </div>
-  {/if}
 
 </div>
 

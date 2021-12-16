@@ -182,6 +182,8 @@
 </script>
 
 <form on:submit|preventDefault={createPost} class="my-4 mx-auto container p-4">
+	
+	
 	<div class="my-1">
 		<label for="title">Title</label>
 		<input type="text" placeholder="Enter title" id="title" bind:value={title} />
@@ -195,52 +197,7 @@
 		<input type="text" placeholder="A short description of the project" id="when" bind:value={values.description} />
 	</div>
 
-	<div class="my-1">
-		<label for="title">Preparation</label>
-		<textarea type="text" placeholder="Enter notes on preparation" id="preparation" bind:value={values.process.preparation} />
-	</div>
-	<div class="my-1">
-		<label for="title">Materials</label>
-		<textarea type="text" placeholder="Enter notes on materials" id="materials" bind:value={values.process.materials} />
-	</div>
-	<div class="my-1">
-		<label for="title">Conditions</label>
-		<textarea type="text" placeholder="Enter notes on conditions" id="conditions" bind:value={values.recipe.conditions} />
-	</div>
-	<div class="my-1">
-		<label for="title">Target Gravity</label>
-		<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
-	</div>
-
-	<div class="my-1">
-		<label for="title">Result</label>
-		<textarea type="text" placeholder="Enter notes on expected result" id="preparation" bind:value={values.recipe.result} />
-	</div>
-	<div class="my-1">
-		<label for="title">Notes</label>
-		<textarea type="text" placeholder="Enter notes on notes" id="preparation" bind:value={values.notes} />
-	</div>
-
 	<div>
-		<label>
-	
-		  <span>Finished?</span>
-	
-		  <input type="checkbox" name="finished" bind:checked={values.finished}/>
-		</label>
-	
-	  </div>
-	  <div>
-		<label>
-	
-		  <span>Public Project?</span>
-	
-		  <input type="checkbox" name="public" bind:checked={values.public}/>
-		</label>
-	
-	  </div>
-	
-	  <div>
 
 		<label for="title">Main Ingredients</label>
 	
@@ -317,6 +274,60 @@
 		<button class="add" on:click|preventDefault={addSecondary}> + add </button>
 	
 	  </div>
+
+
+
+	<div class="my-1">
+		<label for="title">Conditions</label>
+		<textarea type="text" placeholder="Enter notes on conditions" id="conditions" bind:value={values.recipe.conditions} />
+	</div>
+	<div class="my-1">
+		<label for="title">Result</label>
+		<textarea type="text" placeholder="Enter notes on expected result" id="preparation" bind:value={values.recipe.result} />
+	</div>
+
+	<div>
+		<label>
+	
+		  <span>Finished?</span>
+	
+		  <input type="checkbox" name="finished" bind:checked={values.finished}/>
+		</label>
+	
+	  </div>
+	  <div>
+		<label>
+	
+		  <span>Public Project?</span>
+	
+		  <input type="checkbox" name="public" bind:checked={values.public}/>
+		</label>
+	
+	  </div>
+	
+
+
+
+
+	<div class="my-1">
+		<label for="title">Preparation</label>
+		<textarea type="text" placeholder="Enter notes on preparation" id="preparation" bind:value={values.process.preparation} />
+	</div>
+	<div class="my-1">
+		<label for="title">Materials</label>
+		<textarea type="text" placeholder="Enter notes on materials" id="materials" bind:value={values.process.materials} />
+	</div>
+	
+	<div class="my-1">
+		<label for="title">Target Gravity</label>
+		<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+	</div>
+
+	<div class="my-1">
+		<label for="title">Notes</label>
+		<textarea type="text" placeholder="Enter notes on notes" id="preparation" bind:value={values.notes} />
+	</div>
+
 	  <div>
 
 		<h4>Steps</h4>
