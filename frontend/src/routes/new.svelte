@@ -30,6 +30,7 @@
 
 	let mt = {
     title: "title is not handled here",
+	description: "",
 	when: "",
     finished: false,
 	public: false,
@@ -188,6 +189,10 @@
 	<div class="my-1">
 		<label for="when">When</label>
 		<input type="text" placeholder="Freeform relevant project time info" id="when" bind:value={values.when} />
+	</div>
+	<div class="my-1">
+		<label for="description">Description</label>
+		<input type="text" placeholder="A short description of the project" id="when" bind:value={values.description} />
 	</div>
 
 	<div class="my-1">

@@ -32,7 +32,7 @@
 	import Chart from 'svelte-frappe-charts';
 	import Fa from 'svelte-fa'
 	import { faPlus,  faCalendar, faCalendarAlt, faClock, faUser, faWineGlass, faCertificate} from '@fortawesome/free-solid-svg-icons'
-	import { faEye, faEyeSlash, faTrash, faEdit, faClone } from '@fortawesome/free-solid-svg-icons'
+	import { faEye, faEyeSlash, faTrash, faEdit, faClone, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 	export let post: Post;
 
@@ -171,7 +171,7 @@
 <h1 class="flex font-serif text-left py-0 px-4 text-3xl mt-4 max-w-md">{post.title}</h1>
 <p class="justify-end text-right py-2 px-1 mt-4">
 	{#if post.values["finished"]}
-	<Fa icon={faWineGlass} size="lg"/>
+	<Fa icon={faCheck} size="lg"/>
 	{:else}
 	<Fa icon={faCertificate} size="lg" spin />
 	{/if}
@@ -183,9 +183,12 @@
 	<Fa icon={faEyeSlash} size="lg"/>
 	{/if}
 </p>
+
 </div>
+<p class="pl-6 italic font-serif max-w-md">{post.values["description"]}</p>
+
 {#if post.values["when"]}
-<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
+<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-md"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
 {/if}
 
 
@@ -245,7 +248,7 @@
 	<div class="shadow-xl rounded-lg max-w-md">
   <p class="w-fill font-semibold  flex p-3 pl-3 text-gray-100 bg-gray-700 text-left py-2 px-4 mt-2 rounded-sm">Preparation</p>
 
-  {#if post.values["recipe"]["preparation"]}
+  {#if post.values["process"]["preparation"]}
   <p class="text-left py-2 px-4 mt-2">{post.values["process"]["preparation"]}</p>
   {:else}
   <p class="italic text-left py-2 px-4 mt-2">No data</p>
@@ -282,35 +285,40 @@
 </div>
 </div>
 <div id="measures" class="{measuresVisible ? '' : 'hidden'}">
-
+	<div class="shadow-xl rounded-lg max-w-md">
 	<div class="flex border-b pb-3">
-  <div class="text-left font-bold py-2 px-4 mt-2">Target Gravity</div><div class="text-left font-bold py-2 px-4 mt-2 text-white font-bold bg-gray-800"> {post.values["recipe"]["targetgravity"]}</div>
+  <div class="text-left font-bold py-2 px-4 mt-2">Target Gravity</div><div class="text-left font-bold py-2 px-4 mt-2 text-white font-bold bg-gray-700"> {post.values["recipe"]["targetgravity"]}</div>
 		</div>
-  <div class="px-8">
-  <table class="table-auto border-collapse border border-gray-400"> 
-	<thead>
-		<tr class="bg-red-100">
-		  <th>Date</th>
-		  <th>Gravity measure</th>
+  <div class="px-8 pt-5">
+  <table class="table-auto  border-collapse  border-gray-400"> 
+	<thead class="">
+		<tr class="bg-gray-600 text-white">
+		  <th class="p-3">Date</th>
+		  <th class="p-3">Gravity</th>
 		</tr>
 	  </thead>
-	  <tbody class="text-right py-2 px-4 mt-2">
+	  <tbody class="text-right py-2 px-4 mt-2 border-dotted border-2">
 		{#each post.values["process"]["measures"] as measure, idx}
 		<tr class="odd:bg-red even:bg-gray-100">
-		  <td>{measure.date}</td>
-		  <td>{measure.data}</td>
+		  <td class="p-2">{measure.date}</td>
+		  <td class="p-2">{measure.data}</td>
 		</tr>
 		{/each}
 
 	</tbody>
   </table>
+  <div class="pb-8"></div>
+</div>
 </div>
   
   {#if post.values["process"]["measures"].length > 0}
+  <div class="shadow-xl rounded-lg max-w-md">
   <Chart data={data} lineOptions={lineOptions} valuesOverPoints={valuesOverPoints} title={title} height={height} colors={colors} type="line" />
+  </div>
   {/if}
 
 </div>
+
 
 <div id="notes" class="{notesVisible ? '' : 'hidden'}">
 	<div class="shadow-xl py-2 rounded-lg border-2 max-w-md">
@@ -333,15 +341,15 @@
 </div>
 
 
-<div class="my-2 flex justify-between py-2 px-4  items-center gap-2">
+<div class="my-2 flex justify-between py-2 px-4 max-w-md items-center gap-2">
 	{#if $user && post.author.id === $user.id}
 	<button
 	class="bg-red-100 text-white font-bold py-1 px-2 rounded border-transparent"
-	on:click={deletePost}><Fa icon={faTrash} color="red" size="lg"/></button>
+	on:click={deletePost}><Fa icon={faTrash} color="#c08080" size="lg"/></button>
 
 			<button
 				class="bg-gray-100 text-white text-right font-bold py-3 px-2 rounded border-transparent"
-				on:click={() => goto('/new?edit=' + post.id)}><Fa icon={faEdit} color="black" size="3x"/></button>
+				on:click={() => goto('/new?edit=' + post.id)}><Fa icon={faEdit} color="#333333" size="3x"/></button>
 			
 	{/if}
 	
@@ -349,7 +357,7 @@
 	
 	<button
 	class="bg-blue-100 text-white font-bold py-1 px-2 rounded border-transparent"
-	on:click={clonePost}><Fa icon={faClone} color="blue" size="lg"/></button>
+	on:click={clonePost}><Fa icon={faClone} color="#6C9BD2" size="lg"/></button>
 	
 	{/if}
 </div>

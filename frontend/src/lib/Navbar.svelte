@@ -5,7 +5,7 @@
 
 </script>
 
-<nav class="bg-white border-b border-gray-500 py-2 px-4 w-full">
+<nav class="bg-white border-b border-gray-500 py-2 px-4 max-w-md">
 	<div class="flex items-center justify-between container mx-auto">
 		<section>
 		
