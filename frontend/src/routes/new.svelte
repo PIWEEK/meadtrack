@@ -123,6 +123,13 @@
 
 	};
 
+	function toggleFinished(){
+		values.finished = !values.finished;
+	}
+
+	function togglePublic(){
+		values.public = !values.public;
+	}
 
 	// To edit the post
 	async function editPost() {
@@ -230,7 +237,7 @@
 </div>
 
 
-<form on:submit|preventDefault={createPost} class="my-4 max-w-4xl container p-4">
+<form on:submit|preventDefault={createPost} class="max-w-4xl container pl-4 pr-4 pb-4">
 	
 <div id="basic" class="{basicVisible ? '' : 'hidden'}">
 	<div class="my-1">
@@ -250,10 +257,10 @@
 		<label for="title">Main Ingredients</label>
 			<ul>
 			  {#each values.recipe.main as main, idx}
-			  <li class="flex">
+			  <li class="flex mb-1">
 				<button class="px-2" on:click|preventDefault={() => removeMain(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 
-				<input type="text" name={`main[${idx}]`} placeholder="water" bind:value={main.type}/>
+				<input class="mr-1" type="text" name={`main[${idx}]`} placeholder="water" bind:value={main.type}/>
 				<input type="text" name={`main[${idx}]`} placeholder="0" bind:value={main.quantity}/>
 				<input type="text" name={`main[${idx}]`} placeholder="kg" bind:value={main.units}/>
 	
@@ -269,7 +276,7 @@
 		<label for="title">Secondary Ingredients</label>
 			<ul>
 			  {#each values.recipe.secondary as secondary, idx}
-		  	<li class="flex">
+		  	<li class="flex mb-1">
 				<button class="px-2" on:click|preventDefault={() => removeSecondary(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 
 				<input type="text" name={`secondary[${idx}]`} placeholder="New Secondary Ingredient" bind:value={secondary}/>
@@ -291,18 +298,14 @@
 		<textarea rows="3" type="text" placeholder="Enter notes on expected result" id="result" bind:value={values.recipe.result} />
 	</div>
 
+
 	<div class="flex">
-		<label>
-		  <p>Is this mead project finished?</p>
-		  <input type="checkbox" name="finished" bind:checked={values.finished}/>
-		</label>
-    </div>
-    <div class="flex">
-		<label>
-		  <p>Do you want to make this mead project public?</p>
-		  <input type="checkbox" name="public" bind:checked={values.public}/>
-		</label>
-     </div>
+		<button class="bg-gray-{values.finished ? '800' : '300'} text-white font-semibold py-1 px-2 mr-2 rounded border-transparent" id="finished" on:click|preventDefault={toggleFinished}>Finished</button>
+		<button class="bg-gray-{values.public ? '800' : '300'} text-white font-semibold py-1 px-2 rounded border-transparent" id="public" on:click|preventDefault={togglePublic}>Public</button>
+
+	</div>
+
+
 </div>
 
 <div id="steps" class="{stepsVisible ? '' : 'hidden'}">
@@ -320,11 +323,11 @@
 		<label for="title">Steps</label>
 		<ul>
 		  {#each values.process.steps as step, idx}
-		  <li class="flex">
+		  <li class="flex  mb-1">
 			<button class="px-2" on:click|preventDefault={() => removeStep(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 
-			<textarea class="min-w-lg h-24" type="text" name={`step[${idx}]`}	placeholder="a step" bind:value={step.type}/>
-			<input class="max-w-fit" type="date" name={`step[${idx}]`} placeholder=""	bind:value={step.date}/>
+			<textarea class="mr-1" cols=3 type="text" name={`step[${idx}]`}	placeholder="a step" bind:value={step.type}/>
+			<input class="" type="date" name={`step[${idx}]`} placeholder=""	bind:value={step.date}/>
 	
 		  </li>
 		  {/each}
@@ -338,21 +341,20 @@
 	</div>
 <div id="steps" class="{measuresVisible ? '' : 'hidden'}">
 	 
-		<div class="my-1">
+		<div class="flex my-1">
 			<label for="title">Target Gravity</label>
-			<input type="number" placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+			<input class="mt-5 mb-2" type="number"  placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
 		</div>
 				
 		<ul>
 	
 			{#each values.process.measures as measure, idx}
 	  
-			<li class="flex">
+			<li class="flex  mb-1">
 	  
 				<button class="px-2" on:click|preventDefault={() => removeMeasure(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 	  
-			  <input
-			  type="number"
+			  <input class="mr-1" type="number"
 			  name={`measure[${idx}]`}
 			  placeholder="1000"
 			  bind:value={measure.data}
@@ -398,7 +400,7 @@
 
 <style lang="postcss">
 	label {
-		@apply font-bold block mt-5 mb-2;
+		@apply font-bold block mt-3 mb-1;
 	}
 
 	input {
