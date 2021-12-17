@@ -1,6 +1,6 @@
 {
-	"name": "~TODO~",
-	"version": "0.0.1",
+	"name": "meadtrack",
+	"version": "0.1-piweek",
 	"scripts": {
 		"dev": "svelte-kit dev --host 0.0.0.0",
 		"build": "svelte-kit build",
