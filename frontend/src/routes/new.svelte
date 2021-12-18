@@ -1,11 +1,13 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
 	import type { Post } from '$lib/types';
+	let section = "";
 
 	export const load: Load = async ({ fetch, page: { query } }) => {
 		// edit will be an optional query string parameter that'll contain the ID of the post that needs to be updated.
 		// If this is set, the post will be updated instead of being created.
 		const edit = query.get('edit');
+		section = query.get('section');
 
 		if (edit) {
 			const res = await fetch('http://192.168.10.32:1337/posts/' + edit);
@@ -18,6 +20,7 @@
 				return {
 					props: {
 						editId: edit,
+						section: section,
 						title: data.title,
 						values: data.values
 					}
@@ -80,16 +83,38 @@
 	import { faTrashAlt, faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 
 	export let editId: string;
+	export let section: string;
 	export let title = '';
 	export let values = JSON.parse(JSON.stringify(mt));
 	onMount(() => {
 		if (!$user) goto('/login');
+		if (section){
+			if (section == "recipe"){
+				showBasic();
+			}
+			else if (section == "process"){
+				showSteps();
+			}
+			else if (section == "measures"){
+				showMeasures();
+			}
+			else if (section = "notes"){
+				showNotes();
+			}
+			else {
+				showBasic();
+			}
+		}
+		else {
+			showBasic();
+		}
 	});
 
 	export let basicVisible = true;
 	export let stepsVisible = false;
 	export let measuresVisible = false;
 	export let notesVisible = false;
+
 
 	function showBasic(){
 		basicVisible = true;
@@ -391,7 +416,7 @@
 <div class="relative grid justify-items-end absolute bottom-0 ">
 	<div class="">
 		<button class="submit bg-black-700" type="submit">Submit</button>
-		<a href="/" class="p-2 underline" type="cancel">Cancel</a>
+		<a href="/projects/{editId}" class="p-2 underline" type="cancel">Cancel</a>
 	</div>
 
 </div>

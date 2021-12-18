@@ -65,6 +65,8 @@
 	export let measuresVisible = false;
 	export let notesVisible = false;
 
+	export let section = "";
+
 	onMount(async () => {
 		// Install the marked package first!
 		// Run this command: npm i marked
@@ -75,11 +77,13 @@
 	});
 
 
+
 	function showBasic(){
 		basicVisible = true;
 		stepsVisible = false;
 		measuresVisible = false;
 		notesVisible = false;
+		section = "recipe";
 
 	};
 
@@ -88,6 +92,7 @@
 		stepsVisible = true;
 		measuresVisible = false;
 		notesVisible = false;
+		section = "process";
 
 	};
 
@@ -96,6 +101,8 @@
 		stepsVisible = false;
 		measuresVisible = true;
 		notesVisible = false;
+		section = "measures";
+
 
 	};
 
@@ -104,6 +111,8 @@
 		stepsVisible = false;
 		measuresVisible = false;
 		notesVisible = true;
+		section = "notes";
+
 
 	};
 	async function deletePost() {
@@ -186,7 +195,7 @@
 
 </div>
 {#if post.values["description"]}
-<p class="pl-6 italic font-serif max-w-4xl">{post.values["description"]}</p>
+<p class="pl-6 pr-4 italic font-serif max-w-4xl">{post.values["description"]}</p>
 {/if}
 {#if post.values["when"]}
 <p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
@@ -198,21 +207,28 @@
 
   <div class="shadow-xl rounded-lg max-w-4xl">
 
-  <p class="text-left py-2 px-4 text-2xl mt-2 font-serif">Main ingredients</p>
-  <ul class="text-left pb-2 px-12 mt-2 list-disc">
-	  
-	  {#each post.values["recipe"]["main"] as main, idx}
+  <p class="text-left py-2 pl-4 text-2xl mt-2 font-serif">Main ingredients</p>
+  {#if post.values["recipe"]["main"].length >0}
+
+  <ul class="text-left pb-6 pl-12 pr-4 mt-2 list-disc ">
+
+	{#each post.values["recipe"]["main"] as main, idx}
+
+	<li>
+		<p>{main.type}. {main.quantity} {main.units}</p>
+	</li>
+
+	{/each}
+  </ul>
+  {:else}
+  <p class="italic text-left pb-6 pl-8 mt-2">No data</p>
   
-	  <li>
-		  <p>{main.quantity} {main.units} of {main.type}</p>
-	  </li>
-  
-	  {/each}
-  
-	</ul>
-	<p class="text-left py-2 px-4 text-2xl mt-2  font-serif">Secondary ingredients</p>
-	<ul class="text-left pb-6 px-12 mt-2 list-disc ">
-	  
+  {/if}
+	<p class="text-left pb-2 pl-4 text-2xl mt-2  font-serif">Secondary ingredients</p>
+	{#if post.values["recipe"]["secondary"].length >0}
+
+	<ul class="text-left pb-6 pl-12 mt-2 list-disc ">
+
 	  {#each post.values["recipe"]["secondary"] as secondary, idx}
   
 	  <li>
@@ -220,8 +236,12 @@
 	  </li>
   
 	  {/each}
-  
 	</ul>
+	{:else}
+	<p class="italic text-left pb-6 pl-8 mt-2">No data</p>
+	
+	{/if}
+
 	</div>
 	<div class="shadow-xl rounded-lg max-w-4xl">
 	<p class="w-fill font-semibold flex p-3 pl-3 text-gray-100 bg-gray-700 text-left py-2 px-4 mt-2 rounded-sm">Conditions</p>
@@ -365,7 +385,7 @@
 
 			<button
 				class="bg-gray-100 text-white text-right font-bold py-3 px-2 rounded border-transparent"
-				on:click={() => goto('/new?edit=' + post.id)}><Fa icon={faEdit} color="#333333" size="3x"/></button>
+				on:click={() => goto('/new?edit=' + post.id +"&section="+section)}><Fa icon={faEdit} color="#333333" size="3x"/></button>
 			
 	{/if}
 	
