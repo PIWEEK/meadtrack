@@ -6,7 +6,7 @@
 		const { slug } = params;
 
 		// Now, we'll fetch the mead projects from Strapi
-		const res = await fetch('http://192.168.10.32:1337/posts/' + slug);
+		const res = await fetch('https://merrybrew.app:1337/posts/' + slug);
 
 		// A 404 status means "NOT FOUND"
 		if (res.status === 404) {
@@ -121,7 +121,7 @@
 			return;
 		}
 
-		const res = await fetch('http://192.168.10.32:1337/posts/' + post.id, {
+		const res = await fetch('https://merrybrew.app:1337/posts/' + post.id, {
 			method: 'DELETE',
 			headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
 		});
@@ -145,7 +145,7 @@
 		summaryvalues["process"]["measures"] = [];
 		summaryvalues["public"] = false;
 
-		const res = await fetch('http://192.168.10.32:1337/posts', {
+		const res = await fetch('https://merrybrew.app:1337/posts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
