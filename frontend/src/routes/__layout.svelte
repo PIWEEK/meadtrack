@@ -15,7 +15,7 @@
 		}
 
 		// Fetch the user from strapi
-		const res = await fetch('https://merrybrew.app:1337/auth/me', {
+		const res = await fetch('https://api.merrybrew.app/auth/me', {
 			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
 		});
 		const user: User = await res.json();

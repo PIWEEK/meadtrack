@@ -10,7 +10,7 @@
 		section = query.get('section');
 
 		if (edit) {
-			const res = await fetch('https://merrybrew.app:1337/posts/' + edit);
+			const res = await fetch('https://api.merrybrew.app/posts/' + edit);
 
 			if (res.status === 404) {
 				const error = new Error(`The post with ID ${edit} was not found`);
@@ -163,7 +163,7 @@
 			return;
 		}
 
-		const res = await fetch('https://merrybrew.app:1337/posts/' + editId, {
+		const res = await fetch('https://api.merrybrew.app/posts/' + editId, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -197,7 +197,7 @@
 
 
 
-		const res = await fetch('https://merrybrew.app:1337/posts', {
+		const res = await fetch('https://api.merrybrew.app/posts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

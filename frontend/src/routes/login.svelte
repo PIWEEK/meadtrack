@@ -7,7 +7,7 @@
 	let password = '';
 
 	async function login() {
-		const res = await fetch('http://192.168.10.32:1337/auth/local', {
+		const res = await fetch('https://api.merrybrew.app/auth/local', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify({ identifier: email, password })
