@@ -3,8 +3,8 @@
 	"version": "0.1-piweek",
 	"scripts": {
 		"dev": "svelte-kit dev --host 0.0.0.0",
-		"build": "svelte-kit build",
-		"preview": "svelte-kit preview",
+		"build": "svelte-kit build --host 0.0.0.0",
+		"preview": "svelte-kit preview --host 0.0.0.0",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
