@@ -1,9 +1,9 @@
 {
-	"name": "meadtrack",
+	"name": "merrybrew",
 	"version": "0.1-piweek",
 	"scripts": {
 		"dev": "svelte-kit dev --host",
-		"build": "svelte-kit build --host",
+		"build": "svelte-kit build",
 		"preview": "svelte-kit preview --host",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -36,6 +36,7 @@
 		"@fontsource/fira-mono": "^4.2.2",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
 		"@lukeed/uuid": "^2.0.0",
+		"@sveltejs/adapter-node": "^1.0.0-next.56",
 		"cookie": "^0.4.1",
 		"marked": "^2.1.1",
 		"svelte-fa": "^2.4.0",

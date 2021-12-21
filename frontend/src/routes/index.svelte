@@ -35,7 +35,7 @@
 
     <div class="flex-grow">
 		<div class="my-4">
-			<h1 class="text-center font-serif text-4xl font-bold ">My mead projects</h1>
+			<h1 class="text-center font-serif text-4xl font-bold ">My brew projects</h1>
 		</div>
 		
 		<div class="container  mt-2">

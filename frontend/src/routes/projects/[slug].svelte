@@ -198,7 +198,7 @@
 <p class="pl-6 pr-4 italic font-serif max-w-4xl">{post.values["description"]}</p>
 {/if}
 {#if post.values["when"]}
-<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-700 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
+<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-500 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
 {/if}
 
 

@@ -439,7 +439,4 @@
 	.submit {
 		@apply bg-green-600 text-white border-transparent rounded px-4 py-2;
 	}
-	.add {
-		@apply bg-green-800 text-white;
-	}
 </style>

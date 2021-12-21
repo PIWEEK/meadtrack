@@ -30,7 +30,8 @@
 
 <div class="p-10 max-w-3xl">
 <form on:submit|preventDefault={login} class="container mx-auto">
-	<h1 class="text-center text-2xl pb-2 font-bold">Welcome to MeadTrack</h1>
+	<h1 class="text-center text-2xl pb-2 font-bold">Welcome to Merrybrew!</h1>
+	<h2 class="text-center text-lg pb-2 font-bold">During early access please request a user via invite@merrybrew.app</h2>
 
 	<div class="my-1">
 		<label for="email">Email</label>
