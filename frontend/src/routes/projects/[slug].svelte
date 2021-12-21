@@ -32,7 +32,7 @@
 	import Chart from 'svelte-frappe-charts';
 	import Fa from 'svelte-fa'
 	import { faPlus,  faCalendar, faCalendarAlt, faClock, faUser, faWineGlass, faCertificate} from '@fortawesome/free-solid-svg-icons'
-	import { faEye, faHourglassHalf, faEyeSlash, faTrash, faEdit, faClone, faCheck, faWineBottle } from '@fortawesome/free-solid-svg-icons'
+	import { faEye, faHourglassHalf, faBong, faEyeSlash, faTrash, faEdit, faClone, faCheck, faWineBottle } from '@fortawesome/free-solid-svg-icons'
 
 	export let post: Post;
 
@@ -182,7 +182,7 @@
 	{#if post.values["finished"]}
 	<Fa icon={faWineBottle} size="lg"/>
 	{:else}
-	<Fa icon={faHourglassHalf} size="lg" spin />
+	<Fa icon={faBong} size="lg" />
 	{/if}
 </p>
 <p class="justify-end text-right py-2 px-1 pr-4 mt-4">

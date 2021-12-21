@@ -4,7 +4,7 @@
 	import Fa from 'svelte-fa'
 
 	import { faBeer, faPlus, faPlusCircle, faCalendar, faCalendarAlt, faClock, faUser, faWineGlass, faCertificate} from '@fortawesome/free-solid-svg-icons'
-	import { faEye, faEyeSlash,faHourglassHalf, faTrash, faEdit, faClone, faCheck, faWineBottle, faBacteria } from '@fortawesome/free-solid-svg-icons'
+	import { faEye, faEyeSlash,faHourglassHalf, faBong, faTrash, faEdit, faClone, faCheck, faWineBottle, faBacteria } from '@fortawesome/free-solid-svg-icons'
 
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('/posts');
@@ -50,7 +50,7 @@
 							{#if post.values["finished"]}
 							<Fa icon={faWineBottle} translateY="0"  size="sm"/>
 							{:else}
-							<Fa icon={faHourglassHalf} translateY="0" size="sm" spin />
+							<Fa icon={faBong} translateY="0" size="sm"/>
 							{/if}
 						</p>
 						<p class=" mx-0 my-1 mt-1">
