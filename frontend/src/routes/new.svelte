@@ -325,8 +325,8 @@
 
 
 	<div class="flex">
-		<button class="bg-gray-{values.finished ? '800' : '300'} text-white font-semibold py-1 px-2 mr-2 rounded border-transparent" id="finished" on:click|preventDefault={toggleFinished}>Finished</button>
-		<button class="bg-gray-{values.public ? '800' : '300'} text-white font-semibold py-1 px-2 rounded border-transparent" id="public" on:click|preventDefault={togglePublic}>Public</button>
+		<button class="bg-gray-{values.finished ? '700' : '300'} text-white font-semibold py-1 px-2 mr-2 rounded border-transparent" id="finished" on:click|preventDefault={toggleFinished}>Finished</button>
+		<button class="bg-gray-{values.public ? '700' : '300'} text-white font-semibold py-1 px-2 rounded border-transparent" id="public" on:click|preventDefault={togglePublic}>Public</button>
 
 	</div>
 
@@ -416,7 +416,11 @@
 <div class="relative grid justify-items-end absolute bottom-0 ">
 	<div class="">
 		<button class="submit bg-black-700" type="submit">Submit</button>
+		{#if editId}
 		<a href="/projects/{editId}" class="p-2 underline" type="cancel">Cancel</a>
+		{:else}
+		<a href="/" class="p-2 underline" type="cancel">Cancel</a>
+		{/if}
 	</div>
 
 </div>
