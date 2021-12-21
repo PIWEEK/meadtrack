@@ -2,16 +2,23 @@
 	import type { User } from '$lib/types';
 	import { goto } from '$app/navigation';
 	import user from '$lib/user';
+	import Fa from 'svelte-fa'
+
+	import {faCircleNotch} from '@fortawesome/free-solid-svg-icons'
+
 
 	let email = '';
 	let password = '';
+
+	let loginpressed = false;
 
 	async function login() {
 		const res = await fetch('https://api.merrybrew.app/auth/local', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify({ identifier: email, password })
-		});
+		})
+		loginpressed = true; 
 		if (res.ok) {
 			const data: { user: User; jwt: string } = await res.json();
 			localStorage.setItem('token', data.jwt);
@@ -24,6 +31,7 @@
 			if (data?.message?.[0]?.messages?.[0]?.message) {
 				alert(data.message[0].messages[0].message);
 			}
+			loginpressed = false;
 		}
 	}
 </script>
@@ -42,7 +50,11 @@
 		<input type="password" placeholder="Enter your password" bind:value={password} />
 	</div>
 	<div class="my-3">
+		{#if !loginpressed}
 		<button class="submit" type="submit">Login</button>
+		{:else}
+		<button class="submit"><Fa icon={faCircleNotch} spin size="lg"/></button>
+		{/if}
 	</div>
 </form>
 </div>

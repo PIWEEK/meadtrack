@@ -169,10 +169,10 @@
 {#if post.values["public"] ||post.author.id === $user.id }
 
 <div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-4xl border-gray-500 border-b">
-	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="basic" on:click={showBasic}>RECIPE</button>
-	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="steps" on:click={showSteps}>PROCESS</button>
-	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="measures" on:click={showMeasures}>MEASURES</button>
-	<button class="bg-gray-{notesVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-transparent" id="notes" on:click={showNotes}>NOTES</button>
+	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="basic" on:click={showBasic}>RECIPE</button>
+	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="steps" on:click={showSteps}>PROCESS</button>
+	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="measures" on:click={showMeasures}>MEASURES</button>
+	<button class="bg-gray-{notesVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="notes" on:click={showNotes}>NOTES</button>
 
 </div>
 
@@ -198,7 +198,7 @@
 <p class="pl-6 pr-4 italic font-serif max-w-4xl">{post.values["description"]}</p>
 {/if}
 {#if post.values["when"]}
-<p class="w-fill flex border-double border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-500 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
+<p class="w-fill flex border-transparent border-4 text-sm p-3 pl-3 text-gray-100 bg-gray-500 text-left gap-2 py-2 px-4 mt-2 rounded-sm max-w-4xl"><Fa icon={faCalendarAlt} translateY="0.2" size="sm"/> {post.values["when"]}</p>
 {/if}
 
 
@@ -395,6 +395,9 @@
 	class="bg-blue-100 text-white font-bold py-1 px-2 rounded border-transparent"
 	on:click={clonePost}><Fa icon={faClone} color="#6C9BD2" size="lg"/></button>
 	
+	{/if}
+	{#if !$user}
+	<p class="text-left py-2 px-4 mt-2">{post.values["notes"]}</p>
 	{/if}
 </div>
 
