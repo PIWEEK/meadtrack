@@ -253,10 +253,10 @@
 
 </script>
 
-<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-4xl border-gray-500 border-b">
-	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="basic" on:click={showBasic}>RECIPE</button>
+<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-1 max-w-4xl border-gray-500 border-b text-sm">
+	<button class="bg-gray-{basicVisible ? '700' : '500'}  text-white font-semibold py-1 px-2 rounded border-double border-4" id="basic" on:click={showBasic}>RECIPE</button>
 	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="steps" on:click={showSteps}>PROCESS</button>
-	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="measures" on:click={showMeasures}>MEASURES</button>
+	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="measures" on:click={showMeasures}>GRAVITY</button>
 	<button class="bg-gray-{notesVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="notes" on:click={showNotes}>NOTES</button>
 
 </div>
@@ -368,7 +368,7 @@
 	 
 		<div class="flex my-1">
 			<label for="title">Target Gravity</label>
-			<input class="mt-5 mb-2" type="number"  placeholder="1010" id="targetgravity" bind:value={values.recipe.targetgravity} />
+			<input class="mt-5 mb-2" type="number"  step=0.001 placeholder="1.010" id="targetgravity" bind:value={values.recipe.targetgravity} />
 		</div>
 				
 		<ul>
@@ -379,9 +379,9 @@
 	  
 				<button class="px-2" on:click|preventDefault={() => removeMeasure(idx)}><Fa icon={faTrashAlt} size="sm"/></button>
 	  
-			  <input class="mr-1" type="number"
+			  <input class="mr-1" type="number" min=0.800 max=1.300 step=0.001
 			  name={`measure[${idx}]`}
-			  placeholder="1000"
+			  placeholder="1.000"
 			  bind:value={measure.data}
 	  
 			  />

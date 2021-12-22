@@ -40,12 +40,12 @@
     	return x["date"];
 	});
 	var datax = post.values["process"]["measures"].map(function(x: any[]) {
-    	return x["data"]-1000;
+    	return Number(x["data"]-1).toFixed(3);
 	});
 
 	let data = {
     	labels: datay, 
-		yMarkers: [{ label: "Target Gravity", value: post.values["recipe"]["targetgravity"]-1000, options: { labelPos: "right" } },
+		yMarkers: [{ label: "Target Gravity", value: post.values["recipe"]["targetgravity"]-1, options: { labelPos: "left" } },
 		{ label: "", value: 0, }],
     	datasets: [
     	  {
@@ -56,7 +56,7 @@
   };
 	let valuesOverPoints = true;
 	let lineOptions = { dotSize: 8};
-	let title = "Gravity measurements in excess of 1000";
+	let title = "Gravity measurements in excess of 1";
 	let height = 350;
 	let colors = ['#000000'];
 
@@ -77,6 +77,9 @@
 	});
 
 
+	function giveABV(OG: number, FG: number){
+		return Number((OG-FG)*131.25).toFixed(1);
+	}
 
 	function showBasic(){
 		basicVisible = true;
@@ -168,10 +171,10 @@
 
 {#if post.values["public"] ||post.author.id === $user.id }
 
-<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-2 max-w-4xl border-gray-500 border-b">
+<div id="sections" class="my-2 flex justify-center pb-2 px-0  items-center gap-1 max-w-4xl border-gray-500 border-b text-sm">
 	<button class="bg-gray-{basicVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="basic" on:click={showBasic}>RECIPE</button>
 	<button class="bg-gray-{stepsVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="steps" on:click={showSteps}>PROCESS</button>
-	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="measures" on:click={showMeasures}>MEASURES</button>
+	<button class="bg-gray-{measuresVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="measures" on:click={showMeasures}>GRAVITY</button>
 	<button class="bg-gray-{notesVisible ? '700' : '500'} text-white font-semibold py-1 px-2 rounded border-double border-4" id="notes" on:click={showNotes}>NOTES</button>
 
 </div>
@@ -330,6 +333,7 @@
 		<tr class="bg-gray-600 text-white">
 		  <th class="p-3">Date</th>
 		  <th class="p-3">Gravity</th>
+		  <th class="p-3">ABV</th>
 		</tr>
 	  </thead>
 	  <tbody class="text-right py-2 px-4 mt-2 border-dotted border-2">
@@ -343,11 +347,13 @@
 			  {/if}
 			</td>
 		  <td class="p-2">{measure.data}</td>
+		  <td class="p-2">~{giveABV(post.values["process"]["measures"][0].data, measure.data)}%</td>
 		</tr>
 		{/each}
 
 	</tbody>
   </table>
+  <p class="pl-2 pr-4 italic text-sm font-serif max-w-4xl">ABV = Alcohol by volume (approximate)</p>
   <div class="pb-8"></div>
 </div>
 </div>
