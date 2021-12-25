@@ -39,7 +39,7 @@
 <div class="p-10 max-w-3xl">
 <form on:submit|preventDefault={login} class="container mx-auto">
 	<h1 class="text-center text-2xl pb-2 font-bold">Welcome to Merrybrew!</h1>
-	<h2 class="text-center text-lg pb-2 font-bold">During early access please request a user via invite@merrybrew.app</h2>
+	<p class="text-center text-lg pb-2 font-bold">During early access please request a user via invite@merrybrew.app</p>
 
 	<div class="my-1">
 		<label for="email">Email</label>
@@ -57,6 +57,8 @@
 		{/if}
 	</div>
 </form>
+<p class="text-center text-lg pb-2 font-bold">Alternatively, you can browse <a class="bg-indigo-500 text-white border-transparent rounded px-2 py-2" href="/public/">public projects</a></p>
+
 </div>
 
 <style lang="postcss">

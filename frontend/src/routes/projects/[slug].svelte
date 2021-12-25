@@ -45,8 +45,8 @@
 
 	let data = {
     	labels: datay, 
-		yMarkers: [{ label: "Target Gravity", value: post.values["recipe"]["targetgravity"]-1, options: { labelPos: "left" } },
-		{ label: "", value: 0, }],
+		yMarkers: [{ label: "Target Gravity", value: Number(post.values["recipe"]["targetgravity"]-1).toFixed(3), options: { labelPos: "left" } },
+		],
     	datasets: [
     	  {
     	    values: datax
@@ -55,7 +55,7 @@
 		//yRegions: [{ label: "", start: 0, end: 1000 }],
   };
 	let valuesOverPoints = true;
-	let lineOptions = { dotSize: 8};
+	let lineOptions = { dotSize: 7};
 	let title = "Gravity measurements in excess of 1";
 	let height = 350;
 	let colors = ['#000000'];
@@ -403,8 +403,10 @@
 	
 	{/if}
 	{#if !$user}
-	<p class="text-left py-2 px-4 mt-2">{post.values["notes"]}</p>
+	<p class="text-left italic py-2 px-4 mt-2">This project can be cloned by registered users. During early access please request a user via invite@merrybrew.app</p>
 	{/if}
+
+	
 </div>
 
 {/if}
