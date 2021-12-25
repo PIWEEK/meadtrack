@@ -23,6 +23,9 @@
     },
     "values": {
       "type": "json"
+    },
+    "images": {
+      "type": "json"
     }
   }
 }
